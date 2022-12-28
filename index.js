@@ -18,8 +18,20 @@ app.get("/time", (req, res) => {
     const time = currentDate.getHours() + ":" + currentDate.getMinutes();
     res.send({ status: 200, message: time });
 });
+app.get('/hello/:username', (req, res) => {
+    res.json({status:200, message: `Hello, ${req.params.username}`})
+})
 
-
+app.get('/search', (req, res) => {
+    console.log(req.query.s)
+    if(req.query.s == undefined || req.query.s == "") {
+        console.log(req.query.s)
+        res.json({status:500, error:true, message:"you have to provide a search" })
+    } 
+    else {
+        res.json({status:200, message:"ok", data: req.query.s})
+    }
+})
 app.listen(PORT, () => {
     console.log(`listening at http://localhost:${PORT}`)
 })
