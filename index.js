@@ -92,6 +92,19 @@ app.get("/movies/add", (req, res) => {
         res.json(movies);
       }
 });
+app.get("/movies/delete/:id", (req, res) => {
+    const del = req.params.id;
+    if (isNaN(del)) {
+      res.send({status: 404,error: true,message: `please enter a valid id number`,
+      });
+    } else if (del < 0 || del > movies.length - 1) {
+      res.send({status: 404,error: true,message: `the movie ${del} does not exist`,
+      });
+    } else {
+      movies.splice(del, 1);
+      res.send(movies);
+    }
+  });
 app.listen(PORT, () => {
     console.log(`listening at http://localhost:${PORT}`)
 })
