@@ -105,6 +105,21 @@ app.get("/movies/delete/:id", (req, res) => {
       res.send(movies);
     }
   });
+    app.put("/movies/update/:id", (req, res,next) => {
+    if (req.query.title == undefined) {
+      movies[req.params.id - 1].year = parseInt(req.query.year);
+      movies[req.params.id - 1].rating = parent(req.query.rating);
+      movies[req.params.id - 1].year = parseInt(req.query.year);
+      movies[req.params.id - 1].rating = movies[req.params.id - 1].rating;
+      res.json(movies);
+    } else {
+      movies[req.params.id - 1].title = req.query.title;
+      movies[req.params.id - 1].year = parseInt(req.query.year);
+      movies[req.params.id - 1].rating = parseInt(req.query.rating);
+      res.json(movies);
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`listening at http://localhost:${PORT}`)
 })
