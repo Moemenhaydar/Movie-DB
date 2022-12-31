@@ -70,6 +70,28 @@ app.get('/movies/read/id/:id',(req,res) => {
       res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` });
     }
 });
+app.get("/movies/add", (req, res) => {  
+    if (
+        req.query.title === "" ||
+        req.query.year.length > 4 ||
+        req.query.year === "" ||
+        isNaN(req.query.year) === true ||
+        isNaN(req.query.rating) === true
+      ) {
+        res.json({
+          status: 403,error: true,message: "you cannot create a movie without providing a title and a year",
+        });
+      } else if (req.query.rating === "") {
+        movies.push({title: req.query.title,year: parseInt(req.query.year),rating: 4,
+        });
+        res.json(movies);
+      } else {
+        movies.push({
+          title: req.query.title,year: parseInt(req.query.year),rating: parseInt(req.query.rating),
+        });
+        res.json(movies);
+      }
+});
 app.listen(PORT, () => {
     console.log(`listening at http://localhost:${PORT}`)
 })
